@@ -1,0 +1,21 @@
+Follow steps chronologically--
+
+activating virtual env
+
+pip install virtualenv
+
+add to path virtaulenv
+
+virtualenv env
+
+.\env\Scripts\activate
+
+install requirements.txt
+
+python manage.py migrate (employee)
+
+python manage.py createsuperuser (employee)
+
+python manage.py runserver
+
+neelam pass

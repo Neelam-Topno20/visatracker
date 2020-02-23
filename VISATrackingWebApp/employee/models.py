@@ -37,23 +37,30 @@ class Employee(models.Model):
 class ApplicationStatus(models.Model):
     status = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.status
+
 
 class EmailContent(models.Model):
     content = models.CharField(max_length=500)
     status_id=models.OneToOneField(ApplicationStatus,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.content
 
-class VisaAppplication(models.Model):
-    employee_id=models.ForeignKey(Employee,on_delete=models.CASCADE)
-   # initiated_by = models.ForeignKey(Employee,on_delete=models.DO_NOTHING)
+
+class VisaApplication(models.Model):
+    employee_id=models.ForeignKey(Employee,on_delete=models.CASCADE,related_name='employee_id')
+    initiated_by = models.ForeignKey(Employee,on_delete=models.CASCADE,related_name='initiated_by',null=True,blank=True)
     status_id=models.ForeignKey(ApplicationStatus,on_delete=models.CASCADE)
-    #action_pending_on=models.ForeignKey(Employee,on_delete=models.DO_NOTHING)
+    action_pending_on=models.ForeignKey(Employee,on_delete=models.CASCADE,related_name='action_pending_on',null=True,blank=True)
     date_created = models.DateTimeField("date created", default=datetime.now())
     date_modified = models.DateTimeField("date modified", default=datetime.now())
 
 
+
 class ApplicationHistory(models.Model):
-    application_id=models.ForeignKey(ApplicationStatus,on_delete=models.CASCADE)
+    application_id=models.ForeignKey(VisaApplication,on_delete=models.CASCADE)
     date_created = models.DateTimeField("date created", default=datetime.now())
 
 
